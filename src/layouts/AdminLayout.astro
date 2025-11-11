@@ -1,0 +1,15 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import AdminWrapper from "./AdminWrapper";
+
+const user = (Astro.locals as any).user ? {
+    firstName: (Astro.locals as any).user.firstName,
+    lastName: (Astro.locals as any).user.lastName,
+    email: (Astro.locals as any).user.email,
+} : undefined;
+---
+<BaseLayout title="EnfoKids - Admin">
+    <AdminWrapper client:load user={user}>
+        <slot />
+    </AdminWrapper>
+</BaseLayout>

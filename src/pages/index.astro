@@ -1,16 +1,11 @@
 ---
-
+import { Button } from "@/components/ui/button";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Landing">
+	<h1>Bienvenido a EnfoKids</h1>
+	boton para ir a inicio
+	<Button>
+      <link href="/login">Login</Link>
+    </Button>
+</BaseLayout>
