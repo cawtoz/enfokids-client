@@ -71,19 +71,43 @@ export function ActivityForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Título</FormLabel>
-              <FormControl>
-                <Input placeholder="Título de la actividad" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Título</FormLabel>
+                <FormControl>
+                  <Input placeholder="Título de la actividad" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="type"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tipo</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona un tipo" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value={ActivityType.DIGITAL}>Digital</SelectItem>
+                    <SelectItem value={ActivityType.NON_DIGITAL}>No Digital</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}
@@ -95,6 +119,7 @@ export function ActivityForm({
                 <Textarea
                   placeholder="Describe la actividad..."
                   className="resize-none"
+                  rows={3}
                   {...field}
                 />
               </FormControl>
@@ -103,61 +128,41 @@ export function ActivityForm({
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="type"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Tipo</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="imageUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>URL de Imagen (Opcional)</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecciona un tipo" />
-                  </SelectTrigger>
+                  <Input placeholder="https://ejemplo.com/imagen.jpg" {...field} />
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value={ActivityType.DIGITAL}>Digital</SelectItem>
-                  <SelectItem value={ActivityType.NON_DIGITAL}>No Digital</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormDescription className="text-xs">
+                  URL de la imagen de la actividad
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="imageUrl"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>URL de Imagen (Opcional)</FormLabel>
-              <FormControl>
-                <Input placeholder="https://ejemplo.com/imagen.jpg" {...field} />
-              </FormControl>
-              <FormDescription>
-                URL de la imagen de la actividad
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="resourceUrl"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>URL de Recurso (Opcional)</FormLabel>
-              <FormControl>
-                <Input placeholder="https://ejemplo.com/recurso" {...field} />
-              </FormControl>
-              <FormDescription>
-                URL del recurso relacionado con la actividad
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="resourceUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>URL de Recurso (Opcional)</FormLabel>
+                <FormControl>
+                  <Input placeholder="https://ejemplo.com/recurso" {...field} />
+                </FormControl>
+                <FormDescription className="text-xs">
+                  URL del recurso relacionado con la actividad
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <div className="flex justify-end gap-2 pt-4">
           <Button type="submit" disabled={isSubmitting}>

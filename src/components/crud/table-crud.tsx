@@ -290,14 +290,16 @@ export function TableCRUD<T extends { id: number | string }>({
       {/* Create Dialog */}
       {createForm && (
         <Dialog open={isCreateOpen} onOpenChange={onCreateClose}>
-          <DialogContent>
+          <DialogContent className="max-w-2xl lg:max-w-3xl max-h-[85vh] overflow-hidden flex flex-col">
             <DialogHeader>
               <DialogTitle>Crear {title}</DialogTitle>
               <DialogDescription>
                 Completa el formulario para crear un nuevo registro
               </DialogDescription>
             </DialogHeader>
-            {createForm}
+            <div className="flex-1 overflow-y-auto px-1">
+              <div className="pb-2">{createForm}</div>
+            </div>
           </DialogContent>
         </Dialog>
       )}
@@ -305,14 +307,16 @@ export function TableCRUD<T extends { id: number | string }>({
       {/* Edit Dialog */}
       {editForm && (
         <Dialog open={isEditOpen} onOpenChange={onEditClose}>
-          <DialogContent>
+          <DialogContent className="max-w-2xl lg:max-w-3xl max-h-[85vh] overflow-hidden flex flex-col">
             <DialogHeader>
               <DialogTitle>Editar {title}</DialogTitle>
               <DialogDescription>
                 Modifica los campos que desees actualizar
               </DialogDescription>
             </DialogHeader>
-            {editForm}
+            <div className="flex-1 overflow-y-auto px-1">
+              <div className="pb-2">{editForm}</div>
+            </div>
           </DialogContent>
         </Dialog>
       )}

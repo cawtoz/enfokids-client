@@ -1,0 +1,8 @@
+---
+import AdminLayout from "@/layouts/AdminLayout.astro";
+import { CaregiversTable } from "@/components/crud/caregiver/caregivers-table";
+---
+
+<AdminLayout>
+  <CaregiversTable client:load />
+</AdminLayout>

@@ -1,0 +1,8 @@
+---
+import AdminLayout from "@/layouts/AdminLayout.astro";
+import { TherapistsTable } from "@/components/crud/therapist/therapists-table";
+---
+
+<AdminLayout>
+  <TherapistsTable client:load />
+</AdminLayout>

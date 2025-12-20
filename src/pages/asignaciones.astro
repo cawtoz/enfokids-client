@@ -1,0 +1,8 @@
+---
+import AdminLayout from "@/layouts/AdminLayout.astro";
+import { AssignmentsTable } from "@/components/crud/assignment/assignments-table";
+---
+
+<AdminLayout>
+  <AssignmentsTable client:load />
+</AdminLayout>

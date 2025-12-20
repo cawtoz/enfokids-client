@@ -10,6 +10,7 @@ export const apiClient = axios.create({
     'Content-Type': 'application/json',
   },
   timeout: 10000, // 10 segundos
+  withCredentials: true, // Enviar cookies de sesión
 });
 
 apiClient.interceptors.response.use(

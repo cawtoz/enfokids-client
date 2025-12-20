@@ -6,6 +6,12 @@ import {
   AudioWaveform,
   Command,
   GalleryVerticalEnd,
+  Users,
+  Baby,
+  Heart,
+  Calendar,
+  ClipboardList,
+  TrendingUp,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -43,12 +49,60 @@ const data = {
       icon: Activity,
       items: [
         {
-          title: "Lista de Actividades",
+          title: "Gestionar Actividades",
           url: "/actividades",
         },
+      ],
+    },
+    {
+      title: "Planes",
+      url: "#",
+      icon: ClipboardList,
+      items: [
         {
-          title: "Crear Actividad",
-          url: "/actividades?action=crear",
+          title: "Planes de Actividades",
+          url: "/planes-actividades",
+        },
+      ],
+    },
+    {
+      title: "Asignaciones",
+      url: "#",
+      icon: Calendar,
+      items: [
+        {
+          title: "Gestionar Asignaciones",
+          url: "/asignaciones",
+        },
+      ],
+    },
+    {
+      title: "Usuarios",
+      url: "#",
+      icon: Users,
+      items: [
+        {
+          title: "Terapeutas",
+          url: "/terapeutas",
+        },
+        {
+          title: "Niños",
+          url: "/ninos",
+        },
+        {
+          title: "Cuidadores",
+          url: "/cuidadores",
+        },
+      ],
+    },
+    {
+      title: "Progreso",
+      url: "#",
+      icon: TrendingUp,
+      items: [
+        {
+          title: "Registros de Progreso",
+          url: "/progreso",
         },
       ],
     },

@@ -1,0 +1,8 @@
+---
+import AdminLayout from "@/layouts/AdminLayout.astro";
+import { ActivityPlansTable } from "@/components/crud/activity-plan/activity-plans-table";
+---
+
+<AdminLayout>
+  <ActivityPlansTable client:load />
+</AdminLayout>
