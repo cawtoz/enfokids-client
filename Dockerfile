@@ -6,6 +6,8 @@ COPY package.json bun.lock* ./
 RUN bun install --frozen-lockfile
 
 COPY . .
+ARG PUBLIC_API_URL=http://api:8080
+ENV PUBLIC_API_URL=$PUBLIC_API_URL
 RUN bun run build
 
 # Runtime stage
