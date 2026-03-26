@@ -1,8 +1,10 @@
 "use client"
 
+import * as React from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
+import axios from "axios"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -12,9 +14,18 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import type { Child, CreateChildRequest } from "@/types/user"
+import type { Child, CreateChildRequest, Therapist } from "@/types/user"
+
+const apiClient = axios.create({ baseURL: "/api", headers: { "Content-Type": "application/json" } })
 
 const childSchema = z.object({
   username: z.string().min(3, "El usuario debe tener al menos 3 caracteres"),
@@ -39,8 +50,14 @@ export function ChildForm({
   onSubmit,
   isSubmitting = false,
 }: ChildFormProps) {
+  const [therapists, setTherapists] = React.useState<Therapist[]>([])
+
+  React.useEffect(() => {
+    apiClient.get<Therapist[]>("therapists").then((r) => setTherapists(r.data)).catch(() => {})
+  }, [])
+
   const form = useForm<ChildFormValues>({
-    resolver: zodResolver(childSchema),
+    resolver: zodResolver(childSchema) as any,
     defaultValues: {
       username: initialData?.username ?? "",
       password: "",
@@ -138,10 +155,24 @@ export function ChildForm({
           name="therapistId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>ID del Terapeuta</FormLabel>
-              <FormControl>
-                <Input type="number" placeholder="ID del terapeuta" {...field} />
-              </FormControl>
+              <FormLabel>Terapeuta</FormLabel>
+              <Select
+                onValueChange={(val) => field.onChange(Number(val))}
+                defaultValue={field.value ? String(field.value) : undefined}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecciona un terapeuta" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {therapists.map((t) => (
+                    <SelectItem key={t.id} value={String(t.id)}>
+                      {t.firstName} {t.lastName}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}

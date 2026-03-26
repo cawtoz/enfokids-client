@@ -1,0 +1,49 @@
+---
+export const prerender = false;
+import ChildLayout from "@/layouts/ChildLayout.astro";
+import { ChildHome } from "@/components/pages/ChildHome";
+
+const { id } = Astro.params;
+const user = (Astro.locals as any).user;
+const userRoles = user?.roles || [];
+
+// Solo cuidadores y el mismo niño pueden ver esta página
+const isCaregiver = userRoles.includes('CAREGIVER');
+const isChild = userRoles.includes('CHILD');
+const isSameChild = isChild && user.id === parseInt(id || '0');
+
+if (!isCaregiver && !isSameChild) {
+  return Astro.redirect('/login');
+}
+
+// Obtener datos del niño que se está viendo
+let childData = null;
+try {
+  const response = await fetch(`${import.meta.env.PUBLIC_API_URL || 'http://localhost:8080'}/api/children/${id}`, {
+    headers: {
+      'Authorization': `Bearer ${(Astro.cookies.get('token')?.value || '')}`,
+    },
+  });
+
+  if (response.ok) {
+    childData = await response.json();
+  }
+} catch (error) {
+  console.error('Error fetching child data:', error);
+}
+
+if (!childData) {
+  return Astro.redirect('/inicio-cuidador');
+}
+---
+<ChildLayout title={`EnfoKids - ${childData.firstName} ${childData.lastName}`}>
+  <ChildHome
+    client:load
+    user={{
+      id: childData.id,
+      firstName: childData.firstName,
+      lastName: childData.lastName,
+      email: childData.email
+    }}
+  />
+</ChildLayout>

@@ -1,0 +1,22 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import ChildWrapper from "./ChildWrapper";
+
+const user = (Astro.locals as any).user ? {
+    id: (Astro.locals as any).user.id,
+    firstName: (Astro.locals as any).user.firstName,
+    lastName: (Astro.locals as any).user.lastName,
+    email: (Astro.locals as any).user.email,
+} : undefined;
+
+interface Props {
+    title?: string;
+}
+
+const { title = "EnfoKids" } = Astro.props;
+---
+<BaseLayout title={title}>
+    <ChildWrapper client:load user={user}>
+        <slot />
+    </ChildWrapper>
+</BaseLayout>

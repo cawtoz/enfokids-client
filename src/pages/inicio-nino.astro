@@ -1,0 +1,9 @@
+---
+export const prerender = false;
+import ChildLayout from "@/layouts/ChildLayout.astro";
+import { ChildHome } from "@/components/pages/ChildHome";
+const user = (Astro.locals as any).user;
+---
+<ChildLayout title="EnfoKids - Mi panel">
+  <ChildHome client:load user={{ id: user.id, firstName: user.firstName, lastName: user.lastName, email: user.email }} />
+</ChildLayout>

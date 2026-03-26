@@ -9,6 +9,7 @@ import { GenericCRUDService } from "@/lib/generic-crud-service"
 import type { Therapist, CreateTherapistRequest } from "@/types/user"
 import type { ColumnDef } from "@/components/crud/table-crud"
 import { createActionsColumn } from "@/components/crud/activity/activities-table"
+import { TherapistChildrenSheet } from "@/components/crud/therapist/therapist-children-sheet"
 import { ArrowUpDown } from "lucide-react"
 
 const therapistsService = new GenericCRUDService<Therapist, CreateTherapistRequest>(
@@ -65,6 +66,11 @@ export function TherapistsTable() {
               {row.getValue("speciality")}
             </Badge>
           ),
+        },
+        {
+          id: "children",
+          header: "Niños",
+          cell: ({ row }) => <TherapistChildrenSheet therapist={row.original} />,
         },
         createActionsColumn(onEdit, onDelete),
       ]}

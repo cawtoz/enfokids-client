@@ -45,36 +45,18 @@ const data = {
   navMain: [
     {
       title: "Actividades",
-      url: "#",
+      url: "/actividades",
       icon: Activity,
-      items: [
-        {
-          title: "Gestionar Actividades",
-          url: "/actividades",
-        },
-      ],
     },
     {
       title: "Planes",
-      url: "#",
+      url: "/planes-actividades",
       icon: ClipboardList,
-      items: [
-        {
-          title: "Planes de Actividades",
-          url: "/planes-actividades",
-        },
-      ],
     },
     {
       title: "Asignaciones",
-      url: "#",
+      url: "/asignaciones",
       icon: Calendar,
-      items: [
-        {
-          title: "Gestionar Asignaciones",
-          url: "/asignaciones",
-        },
-      ],
     },
     {
       title: "Usuarios",
@@ -84,28 +66,21 @@ const data = {
         {
           title: "Terapeutas",
           url: "/terapeutas",
+          icon: AudioWaveform,
         },
         {
           title: "Niños",
           url: "/ninos",
+          icon: Baby,
         },
         {
           title: "Cuidadores",
           url: "/cuidadores",
+          icon: Heart,
         },
       ],
     },
-    {
-      title: "Progreso",
-      url: "#",
-      icon: TrendingUp,
-      items: [
-        {
-          title: "Registros de Progreso",
-          url: "/progreso",
-        },
-      ],
-    },
+    // Progreso eliminado
   ],
 }
 
@@ -114,6 +89,7 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
     firstName: string;
     lastName: string;
     email: string;
+    roles?: string[];
   }
 }
 
@@ -130,6 +106,13 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
   }, [])
 
   const navMain = React.useMemo(() => {
+    const isCaregiver = user?.roles?.includes("CAREGIVER")
+
+    if (isCaregiver) {
+      // Para cuidadores, no mostrar nada - el panel ya está en /inicio-cuidador
+      return []
+    }
+
     return data.navMain.map((item) => {
       const items = item.items?.map((si) => {
         const normalized = si.url.startsWith("/") ? si.url : `/${si.url}`
@@ -139,7 +122,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
       const parentActive = items?.some((i) => i.isActive) ?? false
       return { ...item, items, isActive: parentActive || false }
     })
-  }, [currentPath])
+  }, [currentPath, user?.roles])
 
   return (
     <Sidebar collapsible="icon" {...props}>

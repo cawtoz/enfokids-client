@@ -78,9 +78,13 @@ export function LoginForm() {
       }
 
       toast.success("¡Bienvenido de vuelta!")
-      
+
+      const isChild = result.roles?.includes('CHILD')
+      const isCaregiver = result.roles?.includes('CAREGIVER')
+      const redirectPath = isChild ? '/inicio-nino' : isCaregiver ? '/inicio-cuidador' : '/inicio'
+
       setTimeout(() => {
-        window.location.href = "/inicio"
+        window.location.href = redirectPath
       }, 500)
     } catch (error: any) {
       console.error("Error logging in:", error)
@@ -159,11 +163,11 @@ export function LoginForm() {
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="flex flex-col space-y-2">
+      {/* <CardFooter className="flex flex-col space-y-2">
         <Button variant="link" className="text-sm text-muted-foreground">
           ¿Olvidaste tu contraseña?
         </Button>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   )
 }

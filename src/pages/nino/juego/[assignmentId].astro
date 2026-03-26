@@ -1,0 +1,15 @@
+---
+export const prerender = false;
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { GamePage } from "@/components/pages/GamePage";
+
+const user = (Astro.locals as any).user;
+if (!user) return Astro.redirect('/login');
+
+const { assignmentId } = Astro.params;
+const id = Number(assignmentId);
+if (!id) return Astro.redirect('/inicio-nino');
+---
+<BaseLayout title="EnfoKids - Juego">
+  <GamePage client:load assignmentId={id} />
+</BaseLayout>

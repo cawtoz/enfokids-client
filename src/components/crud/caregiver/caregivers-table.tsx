@@ -8,6 +8,7 @@ import { GenericCRUDService } from "@/lib/generic-crud-service"
 import type { Caregiver, CreateCaregiverRequest } from "@/types/user"
 import type { ColumnDef } from "@/components/crud/table-crud"
 import { createActionsColumn } from "@/components/crud/activity/activities-table"
+import { CaregiverChildrenSheet } from "@/components/crud/caregiver/caregiver-children-sheet"
 import { ArrowUpDown } from "lucide-react"
 
 const caregiversService = new GenericCRUDService<Caregiver, CreateCaregiverRequest>(
@@ -55,6 +56,11 @@ export function CaregiversTable() {
         {
           accessorKey: "email",
           header: "Email",
+        },
+        {
+          id: "children",
+          header: "Niños",
+          cell: ({ row }) => <CaregiverChildrenSheet caregiver={row.original} />,
         },
         createActionsColumn(onEdit, onDelete),
       ]}

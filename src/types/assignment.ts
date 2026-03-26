@@ -1,8 +1,7 @@
 export enum AssignmentStatus {
   PENDING = 'PENDING',
   IN_PROGRESS = 'IN_PROGRESS',
-  COMPLETED = 'COMPLETED',
-  CANCELLED = 'CANCELLED'
+  COMPLETED = 'COMPLETED'
 }
 
 export enum FrequencyUnit {
@@ -38,6 +37,7 @@ export interface CreateAssignmentRequest {
   frequencyCount: number;
   repetitions: number;
   estimatedDuration: number;
+  status: AssignmentStatus;
 }
 
 export interface UpdateAssignmentRequest {

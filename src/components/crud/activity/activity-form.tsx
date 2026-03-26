@@ -50,7 +50,7 @@ export function ActivityForm({
     defaultValues: {
       title: initialData?.title ?? "",
       description: initialData?.description ?? "",
-      type: initialData?.type ?? ActivityType.DIGITAL,
+      type: initialData?.type ?? ActivityType.NON_DIGITAL,
       imageUrl: initialData?.imageUrl ?? "",
       resourceUrl: initialData?.resourceUrl ?? "",
     },
@@ -99,8 +99,8 @@ export function ActivityForm({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value={ActivityType.DIGITAL}>Digital</SelectItem>
                     <SelectItem value={ActivityType.NON_DIGITAL}>No Digital</SelectItem>
+                    <SelectItem value={ActivityType.DIGITAL} disabled>Digital (deshabilitado)</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />

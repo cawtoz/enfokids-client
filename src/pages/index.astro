@@ -1,11 +1,408 @@
 ---
-import { Button } from "@/components/ui/button";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
-<BaseLayout title="Landing">
-	<h1>Bienvenido a EnfoKids</h1>
-	boton para ir a inicio
-	<Button>
-      <link href="/login">Login</Link>
-    </Button>
+
+<BaseLayout title="EnfoKids — Plataforma terapéutica para niños con TDAH">
+
+  <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-18px) rotate(3deg); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(-4deg); }
+    }
+    @keyframes float3 {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-22px); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(147,51,234,0.3); }
+      50% { box-shadow: 0 0 40px 12px rgba(147,51,234,0.15); }
+    }
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .float-1 { animation: float 6s ease-in-out infinite; }
+    .float-2 { animation: float2 8s ease-in-out infinite; }
+    .float-3 { animation: float3 5s ease-in-out infinite; }
+    .pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+    .animate-gradient {
+      background-size: 200% 200%;
+      animation: gradient-shift 6s ease infinite;
+    }
+    .hero-bg {
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(147,51,234,0.18) 0%, transparent 70%),
+                  radial-gradient(ellipse 40% 40% at 80% 20%, rgba(99,102,241,0.12) 0%, transparent 60%),
+                  radial-gradient(ellipse 30% 30% at 10% 80%, rgba(236,72,153,0.08) 0%, transparent 50%),
+                  #ffffff;
+    }
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 48px -12px rgba(147,51,234,0.2);
+    }
+    .step-line::after {
+      content: '';
+      position: absolute;
+      top: 24px;
+      left: calc(50% + 32px);
+      width: calc(100% - 64px);
+      height: 2px;
+      background: linear-gradient(90deg, #9333ea, #6366f1);
+      opacity: 0.3;
+    }
+  </style>
+
+  <div class="min-h-screen bg-white text-gray-900 overflow-x-hidden">
+
+    <!-- NAV -->
+    <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-3rem)] max-w-5xl" id="main-nav">
+      <div class="bg-white/70 backdrop-blur-xl border border-white/60 rounded-2xl shadow-xl shadow-purple-100/40 px-6 h-14 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-md">
+            <span class="text-white font-black text-sm">E</span>
+          </div>
+          <span class="text-lg font-bold">Enfo<span class="text-purple-600">Kids</span></span>
+        </div>
+        <div class="hidden md:flex items-center gap-1 text-sm font-medium">
+          <a href="#funciones" data-section="funciones" class="nav-link px-3 py-1.5 rounded-lg text-gray-500 hover:text-purple-600 hover:bg-purple-50 transition-all">Funciones</a>
+          <a href="#como-funciona" data-section="como-funciona" class="nav-link px-3 py-1.5 rounded-lg text-gray-500 hover:text-purple-600 hover:bg-purple-50 transition-all">Cómo funciona</a>
+          <a href="#juegos" data-section="juegos" class="nav-link px-3 py-1.5 rounded-lg text-gray-500 hover:text-purple-600 hover:bg-purple-50 transition-all">Juegos</a>
+        </div>
+        <a href="/login" class="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-sm font-semibold hover:opacity-90 transition-opacity shadow-lg shadow-purple-300/40">
+          Ingresar
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+        </a>
+      </div>
+    </nav>
+
+    <script>
+      const sections = ["funciones", "como-funciona", "juegos"];
+      const links = document.querySelectorAll(".nav-link");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              links.forEach((link) => {
+                const isActive = link.getAttribute("data-section") === entry.target.id;
+                link.classList.toggle("text-purple-600", isActive);
+                link.classList.toggle("bg-purple-50", isActive);
+                link.classList.toggle("text-gray-500", !isActive);
+              });
+            }
+          });
+        },
+        { rootMargin: "-40% 0px -55% 0px" }
+      );
+
+      sections.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+    </script>
+
+    <!-- HERO -->
+    <section class="hero-bg pt-36 pb-20 px-6 relative overflow-hidden min-h-[90vh] flex items-center">
+
+      <div class="absolute top-20 right-0 w-96 h-96 bg-gradient-to-br from-purple-300/20 to-indigo-300/20 rounded-full blur-3xl -z-0 float-1 pointer-events-none"></div>
+      <div class="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-pink-200/20 to-purple-200/20 rounded-full blur-3xl -z-0 float-2 pointer-events-none"></div>
+
+      <div class="absolute top-32 right-16 text-4xl float-1 pointer-events-none select-none opacity-70">🧩</div>
+      <div class="absolute top-48 right-40 text-2xl float-2 pointer-events-none select-none opacity-50">⭐</div>
+      <div class="absolute bottom-32 left-16 text-3xl float-3 pointer-events-none select-none opacity-60">🎯</div>
+      <div class="absolute top-40 left-24 text-2xl float-2 pointer-events-none select-none opacity-40">✨</div>
+      <div class="absolute bottom-48 right-24 text-3xl float-1 pointer-events-none select-none opacity-50">🌟</div>
+
+      <div class="max-w-4xl mx-auto text-center relative z-10 space-y-8">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-indigo-100 border border-purple-200/60 text-purple-700 text-sm font-medium shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
+          Plataforma terapéutica digital para niños con TDAH
+        </div>
+
+        <h1 class="text-6xl md:text-7xl font-extrabold leading-[1.08] tracking-tight">
+          El progreso de<br/>
+          cada niño,<br/>
+          <span class="bg-gradient-to-r from-purple-600 via-fuchsia-500 to-indigo-600 bg-clip-text text-transparent animate-gradient">
+            visible para todos
+          </span>
+        </h1>
+
+        <p class="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+          EnfoKids une a <strong class="text-gray-700">terapeutas</strong>, <strong class="text-gray-700">cuidadores</strong> y <strong class="text-gray-700">niños</strong> en un ecosistema digital donde cada actividad, sesión y avance queda registrado — sin caos, sin papeles.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center pt-2">
+          <a href="/login" class="group pulse-glow px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-lg hover:opacity-95 transition-all shadow-xl shadow-purple-300/40 flex items-center justify-center gap-2">
+            Acceder al sistema
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+          </a>
+          <a href="#como-funciona" class="px-8 py-4 rounded-2xl border-2 border-gray-200 text-gray-700 font-bold text-lg hover:border-purple-300 hover:bg-purple-50 transition-all flex items-center justify-center gap-2">
+            Ver cómo funciona
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"/></svg>
+          </a>
+        </div>
+
+        <div class="pt-10 grid grid-cols-3 gap-4 max-w-lg mx-auto">
+          <div class="text-center">
+            <div class="text-3xl font-extrabold bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent">3</div>
+            <div class="text-xs text-gray-500 mt-1 font-medium">Roles integrados</div>
+          </div>
+          <div class="text-center border-x border-gray-100">
+            <div class="text-3xl font-extrabold bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent">2</div>
+            <div class="text-xs text-gray-500 mt-1 font-medium">Juegos terapéuticos</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-extrabold bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent">∞</div>
+            <div class="text-xs text-gray-500 mt-1 font-medium">Actividades posibles</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMO FUNCIONA -->
+    <section class="py-24 px-6 bg-gray-50" id="como-funciona">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-16 space-y-3">
+          <span class="text-purple-600 font-semibold text-sm uppercase tracking-widest">Flujo de trabajo</span>
+          <h2 class="text-4xl font-extrabold">Así funciona EnfoKids</h2>
+          <p class="text-gray-500 max-w-lg mx-auto">Un proceso claro y estructurado que conecta a todos los actores del tratamiento.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+          <div class="relative text-center space-y-4 step-line">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center text-2xl shadow-lg shadow-purple-200">🩺</div>
+            <div class="text-xs font-bold text-purple-600 uppercase tracking-widest">Paso 1</div>
+            <h3 class="font-bold text-gray-900">El terapeuta crea actividades</h3>
+            <p class="text-sm text-gray-500">Define actividades terapéuticas con descripción y objetivos específicos.</p>
+          </div>
+          <div class="relative text-center space-y-4 step-line">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center text-2xl shadow-lg shadow-indigo-200">📋</div>
+            <div class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Paso 2</div>
+            <h3 class="font-bold text-gray-900">Arma un plan personalizado</h3>
+            <p class="text-sm text-gray-500">Agrupa actividades en planes con frecuencias y repeticiones adaptadas a cada niño.</p>
+          </div>
+          <div class="relative text-center space-y-4 step-line">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-fuchsia-500 to-pink-600 flex items-center justify-center text-2xl shadow-lg shadow-pink-200">🧒</div>
+            <div class="text-xs font-bold text-fuchsia-600 uppercase tracking-widest">Paso 3</div>
+            <h3 class="font-bold text-gray-900">Asigna al niño</h3>
+            <p class="text-sm text-gray-500">Asigna el plan o actividades individuales al niño con fechas de inicio y fin.</p>
+          </div>
+          <div class="text-center space-y-4">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-2xl shadow-lg shadow-green-200">📈</div>
+            <div class="text-xs font-bold text-green-600 uppercase tracking-widest">Paso 4</div>
+            <h3 class="font-bold text-gray-900">Registra el progreso</h3>
+            <p class="text-sm text-gray-500">Documenta cada sesión con notas y estado de completado para seguir la evolución.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUNCIONES POR ROL -->
+    <section class="py-24 px-6 bg-white" id="funciones">
+      <div class="max-w-6xl mx-auto space-y-6">
+        <div class="text-center mb-16 space-y-3">
+          <span class="text-purple-600 font-semibold text-sm uppercase tracking-widest">Roles del sistema</span>
+          <h2 class="text-4xl font-extrabold">Una plataforma, tres perspectivas</h2>
+          <p class="text-gray-500 max-w-lg mx-auto">Cada usuario ve y hace exactamente lo que necesita, sin complejidad innecesaria.</p>
+        </div>
+
+        <!-- Terapeuta -->
+        <div class="group card-hover rounded-3xl border border-purple-100 bg-gradient-to-br from-purple-50 to-white p-8 md:p-12 grid md:grid-cols-2 gap-10 items-center">
+          <div class="space-y-5">
+            <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-purple-100 text-purple-700 font-semibold text-sm">
+              <span class="text-2xl">🩺</span> Terapeuta
+            </div>
+            <h3 class="text-3xl font-extrabold">El centro de la estrategia terapéutica</h3>
+            <p class="text-gray-500 leading-relaxed">El terapeuta tiene control total sobre las actividades, planes y asignaciones. Puede ver de un vistazo todos los niños a su cargo y el estado de cada uno.</p>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="flex items-center gap-2 text-sm text-gray-700"><span class="text-purple-500 font-bold">✓</span> Crear y editar actividades</div>
+              <div class="flex items-center gap-2 text-sm text-gray-700"><span class="text-purple-500 font-bold">✓</span> Armar planes personalizados</div>
+              <div class="flex items-center gap-2 text-sm text-gray-700"><span class="text-purple-500 font-bold">✓</span> Asignar actividades a niños</div>
+              <div class="flex items-center gap-2 text-sm text-gray-700"><span class="text-purple-500 font-bold">✓</span> Ver progreso por sesión</div>
+              <div class="flex items-center gap-2 text-sm text-gray-700"><span class="text-purple-500 font-bold">✓</span> Gestionar cuidadores</div>
+              <div class="flex items-center gap-2 text-sm text-gray-700"><span class="text-purple-500 font-bold">✓</span> Historial completo</div>
+            </div>
+          </div>
+          <div class="relative">
+            <div class="rounded-2xl bg-white border border-purple-100 shadow-xl p-5 space-y-3">
+              <div class="flex items-center gap-3 pb-3 border-b border-gray-100">
+                <div class="w-9 h-9 rounded-xl bg-purple-100 flex items-center justify-center text-lg">🩺</div>
+                <div>
+                  <div class="text-xs text-gray-400">Panel del terapeuta</div>
+                  <div class="text-sm font-bold">Dr. García</div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded-lg bg-gray-50">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-full bg-purple-100 flex items-center justify-center text-sm">🧒</div>
+                  <span class="text-sm font-medium">Sofía R.</span>
+                </div>
+                <span class="text-xs px-2 py-0.5 rounded-full font-medium bg-green-100 text-green-700">En progreso</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded-lg bg-gray-50">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-full bg-purple-100 flex items-center justify-center text-sm">🧒</div>
+                  <span class="text-sm font-medium">Carlos M.</span>
+                </div>
+                <span class="text-xs px-2 py-0.5 rounded-full font-medium bg-yellow-100 text-yellow-700">Pendiente</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded-lg bg-gray-50">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-full bg-purple-100 flex items-center justify-center text-sm">🧒</div>
+                  <span class="text-sm font-medium">Valentina P.</span>
+                </div>
+                <span class="text-xs px-2 py-0.5 rounded-full font-medium bg-blue-100 text-blue-700">Completado</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Cuidador -->
+          <div class="card-hover rounded-3xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-8 space-y-5">
+            <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-blue-100 text-blue-700 font-semibold text-sm">
+              <span class="text-2xl">👨‍👩‍👧</span> Cuidador
+            </div>
+            <h3 class="text-2xl font-extrabold">Siempre informado, siempre conectado</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Los cuidadores tienen visibilidad directa sobre las actividades y el avance del niño. Un mismo cuidador puede estar a cargo de varios niños.</p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-sm text-gray-700"><div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xs">✓</div> Ver asignaciones y su estado</div>
+              <div class="flex items-center gap-2 text-sm text-gray-700"><div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xs">✓</div> Revisar historial de progreso</div>
+              <div class="flex items-center gap-2 text-sm text-gray-700"><div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xs">✓</div> Consultar al terapeuta asignado</div>
+              <div class="flex items-center gap-2 text-sm text-gray-700"><div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xs">✓</div> Gestión de múltiples niños a cargo</div>
+            </div>
+          </div>
+
+          <!-- Niño -->
+          <div class="card-hover rounded-3xl border border-green-100 bg-gradient-to-br from-green-50 to-white p-8 space-y-5">
+            <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-green-100 text-green-700 font-semibold text-sm">
+              <span class="text-2xl">🧒</span> Niño
+            </div>
+            <h3 class="text-2xl font-extrabold">Aprender jugando, crecer progresando</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Los niños interactúan con la plataforma a través de juegos digitales diseñados especialmente para estimular habilidades cognitivas de forma divertida.</p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-sm text-gray-700"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xs">✓</div> Juegos terapéuticos interactivos</div>
+              <div class="flex items-center gap-2 text-sm text-gray-700"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xs">✓</div> Actividades adaptadas a su plan</div>
+              <div class="flex items-center gap-2 text-sm text-gray-700"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xs">✓</div> Seguimiento personalizado de avances</div>
+              <div class="flex items-center gap-2 text-sm text-gray-700"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xs">✓</div> Experiencia visual amigable y motivadora</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TDAH STATS -->
+    <section class="py-20 px-6 bg-gradient-to-r from-purple-600 via-fuchsia-600 to-indigo-600 animate-gradient">
+      <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-8 text-white text-center">
+        <div class="space-y-2">
+          <div class="text-5xl font-extrabold">1 de 10</div>
+          <p class="text-purple-100 text-sm">niños en el mundo tiene TDAH</p>
+        </div>
+        <div class="space-y-2 border-x border-white/20">
+          <div class="text-5xl font-extrabold">3×</div>
+          <p class="text-purple-100 text-sm">mejora con intervención temprana y seguimiento constante</p>
+        </div>
+        <div class="space-y-2">
+          <div class="text-5xl font-extrabold">+74%</div>
+          <p class="text-purple-100 text-sm">de efectividad con terapia estructurada y acompañamiento familiar</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- JUEGOS -->
+    <section class="py-24 px-6 bg-white" id="juegos">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-16 space-y-3">
+          <span class="text-purple-600 font-semibold text-sm uppercase tracking-widest">Demo</span>
+          <h2 class="text-4xl font-extrabold">Juegos terapéuticos incluidos</h2>
+          <p class="text-gray-500 max-w-lg mx-auto">Esta demo incluye 2 juegos digitales diseñados para trabajar habilidades cognitivas clave en niños con TDAH.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="card-hover group rounded-3xl overflow-hidden border border-gray-100 shadow-sm">
+            <div class="h-52 bg-gradient-to-br from-orange-100 via-yellow-100 to-amber-50 flex items-center justify-center relative overflow-hidden">
+              <div class="text-8xl float-1 select-none">🃏</div>
+              <div class="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-orange-500/10 text-orange-600 text-xs font-bold border border-orange-200">Atención sostenida</div>
+              <div class="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent"></div>
+            </div>
+            <div class="p-7 space-y-3">
+              <h3 class="text-xl font-extrabold">Juego de memoria</h3>
+              <p class="text-gray-500 text-sm leading-relaxed">Voltea cartas e intenta recordar las posiciones para encontrar los pares. Trabaja la atención sostenida y la memoria visual a corto plazo.</p>
+              <div class="flex flex-wrap gap-2 pt-1">
+                <span class="px-3 py-1 rounded-full bg-orange-50 text-orange-600 text-xs font-medium border border-orange-100">Atención</span>
+                <span class="px-3 py-1 rounded-full bg-yellow-50 text-yellow-600 text-xs font-medium border border-yellow-100">Memoria visual</span>
+                <span class="px-3 py-1 rounded-full bg-amber-50 text-amber-600 text-xs font-medium border border-amber-100">Digital</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-hover group rounded-3xl overflow-hidden border border-gray-100 shadow-sm">
+            <div class="h-52 bg-gradient-to-br from-purple-100 via-indigo-100 to-blue-50 flex items-center justify-center relative overflow-hidden">
+              <div class="text-8xl float-2 select-none">🔍</div>
+              <div class="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-600 text-xs font-bold border border-purple-200">Memoria de trabajo</div>
+              <div class="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent"></div>
+            </div>
+            <div class="p-7 space-y-3">
+              <h3 class="text-xl font-extrabold">Juego de encontrar parejas</h3>
+              <p class="text-gray-500 text-sm leading-relaxed">Busca y empareja imágenes iguales para mejorar la memoria de trabajo y la atención al detalle. Niveles de dificultad progresivos.</p>
+              <div class="flex flex-wrap gap-2 pt-1">
+                <span class="px-3 py-1 rounded-full bg-purple-50 text-purple-600 text-xs font-medium border border-purple-100">Concentración</span>
+                <span class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 text-xs font-medium border border-indigo-100">Memoria de trabajo</span>
+                <span class="px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-medium border border-blue-100">Digital</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="py-28 px-6 relative overflow-hidden bg-gray-950">
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(147,51,234,0.35),transparent)]"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_80%_80%,rgba(99,102,241,0.2),transparent)]"></div>
+      <div class="absolute top-10 left-1/4 text-5xl float-2 opacity-10 select-none pointer-events-none">🧩</div>
+      <div class="absolute bottom-10 right-1/4 text-5xl float-1 opacity-10 select-none pointer-events-none">🎯</div>
+
+      <div class="max-w-3xl mx-auto text-center relative z-10 space-y-8">
+        <span class="inline-block px-4 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-sm font-medium">
+          Empieza hoy mismo
+        </span>
+        <h2 class="text-5xl font-extrabold text-white leading-tight">
+          El progreso no espera.<br/>
+          <span class="bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">Empieza a registrarlo.</span>
+        </h2>
+        <p class="text-gray-400 text-lg max-w-xl mx-auto">Una plataforma diseñada para que terapeutas, cuidadores y niños trabajen juntos hacia los mismos objetivos.</p>
+        <a href="/login" class="inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-lg hover:opacity-95 transition-opacity shadow-2xl shadow-purple-900/50">
+          Acceder al sistema
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-950 border-t border-white/5 py-10 px-6">
+      <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center">
+            <span class="text-white font-black text-xs">E</span>
+          </div>
+          <span class="text-white font-bold">Enfo<span class="text-purple-400">Kids</span></span>
+        </div>
+        <p class="text-gray-500 text-sm">Plataforma terapéutica para niños con TDAH — Demo académica</p>
+        <div class="flex gap-5 text-sm text-gray-500">
+          <a href="#funciones" class="hover:text-purple-400 transition-colors">Funciones</a>
+          <a href="#juegos" class="hover:text-purple-400 transition-colors">Juegos</a>
+          <a href="/login" class="hover:text-purple-400 transition-colors">Ingresar</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
 </BaseLayout>

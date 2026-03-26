@@ -3,13 +3,20 @@
 import * as React from "react"
 import { TableWrapper } from "@/components/crud/table-wrapper"
 import { AssignmentForm } from "@/components/crud/assignment/assignment-form"
+import { AssignPlanForm } from "@/components/crud/assignment/assign-plan-form"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { GenericCRUDService } from "@/lib/generic-crud-service"
 import type { Assignment, CreateAssignmentRequest, AssignmentStatus } from "@/types/assignment"
 import type { ColumnDef } from "@/components/crud/table-crud"
 import { createActionsColumn } from "@/components/crud/activity/activities-table"
-import { ArrowUpDown } from "lucide-react"
+import { ArrowUpDown, BookOpen } from "lucide-react"
 
 const assignmentsService = new GenericCRUDService<Assignment, CreateAssignmentRequest>(
   "/api",
@@ -24,16 +31,28 @@ const statusMap: Record<AssignmentStatus, { label: string; variant: "default" | 
 }
 
 export function AssignmentsTable() {
+  const [tableKey, setTableKey] = React.useState(0)
+  const [isAssignPlanOpen, setIsAssignPlanOpen] = React.useState(false)
+
   return (
-    <TableWrapper
-      service={assignmentsService}
-      FormComponent={AssignmentForm}
-      title="Asignaciones"
-      description="Gestiona las asignaciones del sistema"
-      createButtonLabel="Crear Asignación"
-      searchColumn="activityTitle"
-      searchPlaceholder="Buscar por actividad..."
-      columns={(onEdit, onDelete) => [
+    <div className="space-y-3">
+      <div className="flex justify-end">
+        <Button variant="secondary" onClick={() => setIsAssignPlanOpen(true)}>
+          <BookOpen className="mr-2 h-4 w-4" />
+          Asignar Plan a Niño
+        </Button>
+      </div>
+
+      <TableWrapper
+        key={tableKey}
+        service={assignmentsService}
+        FormComponent={AssignmentForm}
+        title="Asignaciones"
+        description="Gestiona las asignaciones del sistema"
+        createButtonLabel="Crear Asignación"
+        searchColumn="activityTitle"
+        searchPlaceholder="Buscar por actividad..."
+        columns={(onEdit, onDelete) => [
         {
           accessorKey: "id",
           header: "ID",
@@ -92,5 +111,20 @@ export function AssignmentsTable() {
         createActionsColumn(onEdit, onDelete),
       ]}
     />
+
+      <Dialog open={isAssignPlanOpen} onOpenChange={setIsAssignPlanOpen}>
+        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Asignar Plan a Niño</DialogTitle>
+          </DialogHeader>
+          <AssignPlanForm
+            onSuccess={() => {
+              setIsAssignPlanOpen(false)
+              setTableKey((k) => k + 1)
+            }}
+          />
+        </DialogContent>
+      </Dialog>
+    </div>
   )
 }

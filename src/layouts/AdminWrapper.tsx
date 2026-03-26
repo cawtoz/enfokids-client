@@ -11,9 +11,11 @@ import { Toaster } from "@/components/ui/sonner"
 interface Props {
     children: ReactNode;
     user?: {
+        id?: number;
         firstName: string;
         lastName: string;
         email: string;
+        roles?: string[];
     }
 }
 

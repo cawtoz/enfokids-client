@@ -1,0 +1,9 @@
+---
+export const prerender = false;
+import AdminLayout from "@/layouts/AdminLayout.astro";
+import { CaregiverHome } from "@/components/pages/CaregiverHome";
+const user = (Astro.locals as any).user;
+---
+<AdminLayout title="EnfoKids - Panel del Cuidador">
+  <CaregiverHome client:load user={{ id: user.id, firstName: user.firstName, lastName: user.lastName, email: user.email }} />
+</AdminLayout>

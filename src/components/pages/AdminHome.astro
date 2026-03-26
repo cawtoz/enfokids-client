@@ -1,68 +1,13 @@
 ---
 import AdminLayout from "@/layouts/AdminLayout.astro";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { DashboardHome } from "./DashboardHome";
+
+const user = (Astro.locals as any).user ? {
+  firstName: (Astro.locals as any).user.firstName,
+  lastName: (Astro.locals as any).user.lastName,
+  email: (Astro.locals as any).user.email,
+} : undefined;
 ---
 <AdminLayout title="EnfoKids - Inicio">
-    <h1>Panel de Administración</h1>
-    <p>Bienvenido al panel de administración. Aquí puedes gestionar las actividades, usuarios y más.</p>
-    <Card>
-        <CardHeader>
-            <CardTitle>Estadísticas Rápidas</CardTitle>
-        </CardHeader>
-        <CardContent>
-            <ul>
-                <li>Usuarios Registrados: 1500</li>
-                <li>Actividades Completadas: 300</li>
-                <li>Feedback Recibido: 75</li>
-            </ul>
-        </CardContent> 
-    </Card>
-    <Card>
-        <CardHeader>
-            <CardTitle>Estadísticas Rápidas</CardTitle>
-        </CardHeader>
-        <CardContent>
-            <ul>
-                <li>Usuarios Registrados: 1500</li>
-                <li>Actividades Completadas: 300</li>
-                <li>Feedback Recibido: 75</li>
-            </ul>
-        </CardContent> 
-    </Card>
-    <Card>
-        <CardHeader>
-            <CardTitle>Estadísticas Rápidas</CardTitle>
-        </CardHeader>
-        <CardContent>
-            <ul>
-                <li>Usuarios Registrados: 1500</li>
-                <li>Actividades Completadas: 300</li>
-                <li>Feedback Recibido: 75</li>
-            </ul>
-        </CardContent> 
-    </Card>
-    <Card>
-        <CardHeader>
-            <CardTitle>Estadísticas Rápidas</CardTitle>
-        </CardHeader>
-        <CardContent>
-            <ul>
-                <li>Usuarios Registrados: 1500</li>
-                <li>Actividades Completadas: 300</li>
-                <li>Feedback Recibido: 75</li>
-            </ul>
-        </CardContent> 
-    </Card>
-    <Card>
-        <CardHeader>
-            <CardTitle>Estadísticas Rápidas</CardTitle>
-        </CardHeader>
-        <CardContent>
-            <ul>
-                <li>Usuarios Registrados: 1500</li>
-                <li>Actividades Completadas: 300</li>
-                <li>Feedback Recibido: 75</li>
-            </ul>
-        </CardContent> 
-    </Card>
+  <DashboardHome client:load user={user} />
 </AdminLayout>

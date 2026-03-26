@@ -9,6 +9,8 @@ import { GenericCRUDService } from "@/lib/generic-crud-service"
 import type { Child, CreateChildRequest } from "@/types/user"
 import type { ColumnDef } from "@/components/crud/table-crud"
 import { createActionsColumn } from "@/components/crud/activity/activities-table"
+import { ChildAssignmentsSheet } from "@/components/crud/child/child-assignments-sheet"
+import { ChildCaregiversSheet } from "@/components/crud/child/child-caregivers-sheet"
 import { ArrowUpDown } from "lucide-react"
 
 const childrenService = new GenericCRUDService<Child, CreateChildRequest>(
@@ -77,6 +79,16 @@ export function ChildrenTable() {
               <Badge variant="outline">Sin asignar</Badge>
             )
           },
+        },
+        {
+          id: "assignments",
+          header: "Asignaciones",
+          cell: ({ row }) => <ChildAssignmentsSheet child={row.original} />,
+        },
+        {
+          id: "caregivers",
+          header: "Cuidadores",
+          cell: ({ row }) => <ChildCaregiversSheet child={row.original} />,
         },
         createActionsColumn(onEdit, onDelete),
       ]}

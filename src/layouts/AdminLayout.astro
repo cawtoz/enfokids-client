@@ -3,9 +3,11 @@ import BaseLayout from "./BaseLayout.astro";
 import AdminWrapper from "./AdminWrapper";
 
 const user = (Astro.locals as any).user ? {
+    id: (Astro.locals as any).user.id,
     firstName: (Astro.locals as any).user.firstName,
     lastName: (Astro.locals as any).user.lastName,
     email: (Astro.locals as any).user.email,
+    roles: (Astro.locals as any).user.roles,
 } : undefined;
 ---
 <BaseLayout title="EnfoKids - Admin">
